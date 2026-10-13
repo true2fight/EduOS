@@ -50,7 +50,7 @@ class DesktopManager {
   }
 
   async getDesktopItems() {
-    // 1. Системні постійні ярлики
+    // 1. Системні постійні значки (Цей комп'ютер, Мережа, Кошик)
     const systemShortcuts = [
       {
         id: 'sys_this_pc',
@@ -61,76 +61,20 @@ class DesktopManager {
         action: () => eventBus.emit('app:launch', { appId: 'explorer' })
       },
       {
+        id: 'sys_network',
+        isSystem: true,
+        name: 'Мережа',
+        appId: 'network',
+        iconType: 'network',
+        action: () => eventBus.emit('app:launch', { appId: 'network' })
+      },
+      {
         id: 'sys_recycle_bin',
         isSystem: true,
         name: 'Кошик',
         appId: 'recycle-bin',
         iconType: 'recycle-bin',
         action: () => eventBus.emit('app:launch', { appId: 'recycle-bin' })
-      },
-      {
-        id: 'sys_paint',
-        isSystem: true,
-        name: 'Paint',
-        appId: 'paint',
-        iconType: 'paint',
-        action: () => eventBus.emit('app:launch', { appId: 'paint' })
-      },
-      {
-        id: 'sys_notepad',
-        isSystem: true,
-        name: 'Блокнот',
-        appId: 'notepad',
-        iconType: 'notepad',
-        action: () => eventBus.emit('app:launch', { appId: 'notepad' })
-      },
-      {
-        id: 'sys_archiver',
-        isSystem: true,
-        name: 'Архіватор',
-        appId: 'archiver',
-        iconType: 'archiver',
-        action: () => eventBus.emit('app:launch', { appId: 'archiver' })
-      },
-      {
-        id: 'sys_browser',
-        isSystem: true,
-        name: 'Браузер',
-        appId: 'browser',
-        iconType: 'browser',
-        action: () => eventBus.emit('app:launch', { appId: 'browser' })
-      },
-      {
-        id: 'sys_learning',
-        isSystem: true,
-        name: 'Навчальні завдання',
-        appId: 'learning-catalog',
-        iconType: 'learning',
-        action: () => eventBus.emit('app:launch', { appId: 'learning-catalog' })
-      },
-      {
-        id: 'sys_editor',
-        isSystem: true,
-        name: 'Конструктор завдань',
-        appId: 'task-editor',
-        iconType: 'editor',
-        action: () => eventBus.emit('app:launch', { appId: 'task-editor' })
-      },
-      {
-        id: 'sys_cmd',
-        isSystem: true,
-        name: 'Командний рядок',
-        appId: 'cmd',
-        iconType: 'cmd',
-        action: () => eventBus.emit('app:launch', { appId: 'cmd' })
-      },
-      {
-        id: 'sys_bash',
-        isSystem: true,
-        name: 'Термінал Linux',
-        appId: 'bash',
-        iconType: 'bash',
-        action: () => eventBus.emit('app:launch', { appId: 'bash' })
       }
     ];
 

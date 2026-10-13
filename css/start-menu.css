@@ -62,20 +62,41 @@
   font-size: 14px;
 }
 
-/* Секція закріплених програм */
+/* Категорія програм у меню Пуск */
 .start-section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.start-category-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.start-category-icon {
+  font-size: 15px;
 }
 
 .start-section-title {
-  font-size: 12.5px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.3px;
+}
+
+.start-category-badge {
+  font-size: 11px;
   font-weight: 600;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  color: var(--accent-primary);
+  background: rgba(2, 132, 199, 0.14);
+  border: 1px solid rgba(2, 132, 199, 0.3);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
 }
 
 .start-apps-grid {

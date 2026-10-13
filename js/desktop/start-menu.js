@@ -112,6 +112,11 @@ class StartMenuManager {
     if (!this.appsGridEl) return;
     this.appsGridEl.innerHTML = '';
 
+    const countEl = this.menuEl.querySelector('#start-category-count');
+    if (countEl) {
+      countEl.textContent = `${apps.length} ${apps.length === 1 ? 'програма' : (apps.length >= 2 && apps.length <= 4 ? 'програми' : 'програм')}`;
+    }
+
     if (apps.length === 0) {
       this.appsGridEl.innerHTML = `<div class="start-no-results">Програм не знайдено</div>`;
       return;

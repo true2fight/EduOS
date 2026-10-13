@@ -288,7 +288,7 @@ export class ExplorerApp extends BaseApp {
 
       const crumb = document.createElement('span');
       crumb.className = 'breadcrumb-segment';
-      crumb.textContent = part;
+      crumb.textContent = (part === 'NET:' || part === 'NET') ? 'Мережа' : part;
       crumb.dataset.path = stepPath;
 
       crumb.addEventListener('click', (e) => {
@@ -382,7 +382,9 @@ export class ExplorerApp extends BaseApp {
 
         const sizeStr = item.type === 'directory' ? '' : `${Math.ceil((item.size || 0) / 1024)} КБ`;
         const dateStr = new Date(item.updatedAt).toLocaleString('uk-UA');
-        const typeStr = item.type === 'directory' ? 'Папка з файлами' : `${(item.extension || 'Файл').toUpperCase()}`;
+        const typeStr = item.metadata && item.metadata.isComputer
+          ? `Мережевий комп'ютер (${item.metadata.ip || ''})`
+          : (item.type === 'directory' ? 'Папка з файлами' : `${(item.extension || 'Файл').toUpperCase()}`);
 
         tr.innerHTML = `
           <td class="col-name"><span class="table-icon">${this.getItemIcon(item)}</span> ${item.name}</td>
@@ -405,6 +407,7 @@ export class ExplorerApp extends BaseApp {
         card.innerHTML = `
           <div class="item-icon-wrapper">${this.getItemIcon(item)}</div>
           <div class="item-name" title="${item.name}">${item.name}</div>
+          ${item.metadata && item.metadata.ip ? `<div class="item-ip-tag">${item.metadata.ip}</div>` : ''}
         `;
 
         this.attachItemInteractions(card, item);
@@ -709,11 +712,20 @@ export class ExplorerApp extends BaseApp {
   }
 
   getItemIcon(item) {
-    if (item.type === 'directory') {
-      return `<img src="assets/icons/explorer.svg" alt="" width="26" height="26" style="vertical-align:middle;pointer-events:none;" />`;
+    if (item.metadata && (item.metadata.isComputer || item.metadata.ip)) {
+      if (item.metadata.role === 'server') {
+        return `<img src="assets/icons/network.svg" alt="" width="26" height="26" style="vertical-align:middle;pointer-events:none;" />`;
+      }
+      return `<img src="assets/icons/this-pc.svg" alt="" width="26" height="26" style="vertical-align:middle;pointer-events:none;" />`;
     }
     if (item.type === 'drive') {
+      if (item.metadata && item.metadata.driveLetter === 'NET:') {
+        return `<img src="assets/icons/network.svg" alt="" width="26" height="26" style="vertical-align:middle;pointer-events:none;" />`;
+      }
       return `<img src="assets/icons/disk.svg" alt="" width="26" height="26" style="vertical-align:middle;pointer-events:none;" />`;
+    }
+    if (item.type === 'directory') {
+      return `<img src="assets/icons/explorer.svg" alt="" width="26" height="26" style="vertical-align:middle;pointer-events:none;" />`;
     }
 
     const ext = (item.extension || '').toLowerCase();
