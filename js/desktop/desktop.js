@@ -16,6 +16,7 @@ class DesktopManager {
     this.iconsGridEl = null;
     this.selectionBoxEl = null;
     this.selectedIcons = new Set();
+    this.isInitialized = false;
   }
 
   init(containerElement) {
@@ -23,15 +24,18 @@ class DesktopManager {
     this.wallpaperEl = document.getElementById('desktop-wallpaper');
     this.iconsGridEl = document.getElementById('desktop-icons');
 
-    this.setupRubberbandSelection();
-    this.setupDesktopContextMenu();
+    if (!this.isInitialized) {
+      this.isInitialized = true;
+      this.setupRubberbandSelection();
+      this.setupDesktopContextMenu();
+
+      // Підписка на оновлення VFS та налаштувань
+      eventBus.on('vfs:change', () => this.renderIcons());
+      eventBus.on('vfs:ready', () => this.renderIcons());
+      eventBus.on('settings:updated', () => this.applyWallpaper());
+    }
+
     this.applyWallpaper();
-
-    // Підписка на оновлення VFS та налаштувань
-    eventBus.on('vfs:change', () => this.renderIcons());
-    eventBus.on('vfs:ready', () => this.renderIcons());
-    eventBus.on('settings:updated', () => this.applyWallpaper());
-
     this.renderIcons();
   }
 

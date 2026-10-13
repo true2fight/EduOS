@@ -13,6 +13,7 @@ class TaskbarManager {
     this.tasksListEl = null;
     this.clockEl = null;
     this.clockInterval = null;
+    this.isInitialized = false;
   }
 
   init(containerElement) {
@@ -21,8 +22,13 @@ class TaskbarManager {
     this.tasksListEl = document.getElementById('taskbar-apps');
     this.clockEl = document.getElementById('taskbar-clock');
 
-    this.setupClock();
-    this.setupListeners();
+    if (!this.isInitialized) {
+      this.isInitialized = true;
+      this.setupClock();
+      this.setupListeners();
+    }
+
+    this.renderTasks();
     inputLanguage.updateBadge();
   }
 

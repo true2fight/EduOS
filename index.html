@@ -14,16 +14,16 @@
   <link rel="manifest" href="manifest.json" />
 
   <!-- CSS Design System -->
-  <link rel="stylesheet" href="css/main.css?v=2.8" />
-  <link rel="stylesheet" href="css/icons.css?v=2.8" />
-  <link rel="stylesheet" href="css/desktop.css?v=2.8" />
-  <link rel="stylesheet" href="css/taskbar.css?v=2.8" />
-  <link rel="stylesheet" href="css/start-menu.css?v=2.8" />
-  <link rel="stylesheet" href="css/windows.css?v=2.8" />
-  <link rel="stylesheet" href="css/context-menu.css?v=2.8" />
-  <link rel="stylesheet" href="css/applications.css?v=2.8" />
-  <link rel="stylesheet" href="css/dialogs.css?v=2.8" />
-  <link rel="stylesheet" href="css/responsive.css?v=2.8" />
+  <link rel="stylesheet" href="css/main.css?v=3.1" />
+  <link rel="stylesheet" href="css/icons.css?v=3.1" />
+  <link rel="stylesheet" href="css/desktop.css?v=3.1" />
+  <link rel="stylesheet" href="css/taskbar.css?v=3.1" />
+  <link rel="stylesheet" href="css/start-menu.css?v=3.1" />
+  <link rel="stylesheet" href="css/windows.css?v=3.1" />
+  <link rel="stylesheet" href="css/context-menu.css?v=3.1" />
+  <link rel="stylesheet" href="css/applications.css?v=3.1" />
+  <link rel="stylesheet" href="css/dialogs.css?v=3.1" />
+  <link rel="stylesheet" href="css/responsive.css?v=3.1" />
 
   <!-- Сторонні бібліотеки для офлайн-роботи -->
   <script src="libs/jszip.min.js"></script>
@@ -87,15 +87,9 @@
         <input type="text" id="start-search-input" class="start-search-input" placeholder="Пошук програм, налаштувань та файлів..." />
       </div>
 
-      <div class="start-section-header">
-        <div class="start-category-heading">
-          <span class="start-category-icon">📂</span>
-          <span class="start-section-title">Програми</span>
-        </div>
-        <span class="start-category-badge" id="start-category-count">14 програм</span>
+      <div class="start-apps-scroll-area" id="start-apps-scroll-area">
+        <div class="start-categories-container" id="start-categories-container"></div>
       </div>
-
-      <div class="start-apps-grid" id="start-apps-grid"></div>
 
       <div class="start-profile-footer" id="start-profile-card"></div>
     </div>

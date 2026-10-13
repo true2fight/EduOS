@@ -67,17 +67,44 @@ export class ExplorerApp extends BaseApp {
 
         <!-- Командна панель дій -->
         <div class="explorer-command-bar">
-          <button class="cmd-btn" id="exp-cmd-new-folder">
-            <span class="cmd-icon">📁</span> Нова папка
-          </button>
-          <button class="cmd-btn" id="exp-cmd-new-file">
-            <span class="cmd-icon">📄</span> Новий файл
+          <button class="cmd-btn cmd-btn-create" id="exp-cmd-create" title="Створити новий об'єкт">
+            <span class="cmd-icon">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <line x1="8" y1="2" x2="8" y2="14"/>
+                <line x1="2" y1="8" x2="14" y2="8"/>
+              </svg>
+            </span>
+            <span class="cmd-label">Створити</span>
+            <span class="cmd-arrow">▾</span>
           </button>
           <div class="cmd-separator"></div>
-          <button class="cmd-btn" id="exp-cmd-cut">Вирізати</button>
-          <button class="cmd-btn" id="exp-cmd-copy">Копіювати</button>
-          <button class="cmd-btn" id="exp-cmd-paste">Вставити</button>
-          <button class="cmd-btn" id="exp-cmd-delete">Видалити</button>
+          <button class="cmd-btn cmd-btn-icon-only disabled" id="exp-cmd-copy" title="Копіювати (Ctrl+C)" aria-label="Копіювати (Ctrl+C)">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5.5" y="4.5" width="7" height="9" rx="1.5" />
+              <path d="M3.5 11.5H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v.5" />
+            </svg>
+          </button>
+          <button class="cmd-btn cmd-btn-icon-only disabled" id="exp-cmd-cut" title="Вирізати (Ctrl+X)" aria-label="Вирізати (Ctrl+X)">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="4" cy="4.5" r="2" />
+              <circle cx="4" cy="11.5" r="2" />
+              <path d="M5.6 5.7L13.5 12" />
+              <path d="M5.6 10.3L13.5 4" />
+            </svg>
+          </button>
+          <button class="cmd-btn cmd-btn-icon-only disabled" id="exp-cmd-paste" title="Вставити (Ctrl+V)" aria-label="Вставити (Ctrl+V)">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5.5 3H4a1.5 1.5 0 0 0-1.5 1.5v8A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 12 3h-1.5" />
+              <rect x="5.5" y="1.5" width="5" height="3" rx="1" />
+              <path d="M5.5 7.5h5M5.5 10.5h3.5" />
+            </svg>
+          </button>
+          <button class="cmd-btn cmd-btn-icon-only disabled" id="exp-cmd-delete" title="Видалити (Del)" aria-label="Видалити (Del)">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2.5 4.5h11M5.5 4.5V3a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v1.5M4 4.5l.8 8.6a1.5 1.5 0 0 0 1.5 1.4h3.4a1.5 1.5 0 0 0 1.5-1.4l.8-8.6" />
+              <path d="M6.5 7.5v4M9.5 7.5v4" />
+            </svg>
+          </button>
           <div class="cmd-separator"></div>
           <button class="cmd-btn" id="exp-cmd-import" title="Імпортувати файл із вашого комп'ютера">
             <span>📥</span> Імпорт
@@ -173,10 +200,39 @@ export class ExplorerApp extends BaseApp {
     });
 
     // Командні кнопки
-    this.container.querySelector('#exp-cmd-new-folder').addEventListener('click', () => this.createNewFolder());
-    this.container.querySelector('#exp-cmd-new-file').addEventListener('click', () => this.createNewFile());
-    this.container.querySelector('#exp-cmd-cut').addEventListener('click', () => this.actionCut());
+    const btnCreate = this.container.querySelector('#exp-cmd-create');
+    if (btnCreate) {
+      btnCreate.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const rect = btnCreate.getBoundingClientRect();
+        contextMenu.show([
+          {
+            iconHtml: '<img src="assets/icons/explorer.svg" width="16" height="16" style="vertical-align:middle;margin-right:4px;" />',
+            label: 'Створити папку',
+            action: () => this.createNewFolder()
+          },
+          {
+            iconHtml: '<img src="assets/icons/notepad.svg" width="16" height="16" style="vertical-align:middle;margin-right:4px;" />',
+            label: 'Створити текстовий файл (.txt)',
+            action: () => this.createNewTextFile()
+          },
+          {
+            iconHtml: '<img src="assets/icons/paint.svg" width="16" height="16" style="vertical-align:middle;margin-right:4px;" />',
+            label: 'Створити зображення (.png)',
+            action: () => this.createNewImageFile()
+          },
+          { separator: true },
+          {
+            iconHtml: '<img src="assets/icons/archiver.svg" width="16" height="16" style="vertical-align:middle;margin-right:4px;" />',
+            label: 'Створити архів',
+            action: () => this.createNewArchive()
+          }
+        ], rect.left, rect.bottom + 4);
+      });
+    }
+
     this.container.querySelector('#exp-cmd-copy').addEventListener('click', () => this.actionCopy());
+    this.container.querySelector('#exp-cmd-cut').addEventListener('click', () => this.actionCut());
     this.container.querySelector('#exp-cmd-paste').addEventListener('click', () => this.actionPaste());
     this.container.querySelector('#exp-cmd-delete').addEventListener('click', () => this.actionDelete());
 
@@ -185,6 +241,13 @@ export class ExplorerApp extends BaseApp {
     this.container.querySelector('#exp-cmd-import').addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', (e) => this.handleFileImport(e));
     this.container.querySelector('#exp-cmd-export').addEventListener('click', () => this.handleFileExport());
+
+    // Обробка гарячих клавіш (Ctrl+C, Ctrl+X, Ctrl+V, Delete, Ctrl+A, F2)
+    const onKeyDown = (e) => this.handleKeyDown(e);
+    window.addEventListener('keydown', onKeyDown);
+    this.unsubscribers.push(() => window.removeEventListener('keydown', onKeyDown));
+
+    this.updateToolbarStates();
   }
 
   async renderSidebar() {
@@ -415,6 +478,18 @@ export class ExplorerApp extends BaseApp {
       });
     }
 
+    contentEl.addEventListener('click', (e) => {
+      if (e.target === contentEl || e.target.classList.contains('explorer-details-table') || e.target.tagName === 'TBODY') {
+        this.container.querySelectorAll('.explorer-item-card.selected, .explorer-file-row.selected').forEach((el) => {
+          el.classList.remove('selected');
+        });
+        this.selectedNodeIds.clear();
+        this.updateSelectionStatus();
+      }
+    });
+
+    this.updateCutVisuals();
+    this.updateToolbarStates();
     this.setupContextMenuOnEmpty(contentEl, currentNode);
   }
 
@@ -444,6 +519,15 @@ export class ExplorerApp extends BaseApp {
     element.addEventListener('contextmenu', (e) => {
       e.preventDefault();
       e.stopPropagation();
+      if (!this.selectedNodeIds.has(item.id)) {
+        this.container.querySelectorAll('.explorer-item-card.selected, .explorer-file-row.selected').forEach((el) => {
+          el.classList.remove('selected');
+        });
+        this.selectedNodeIds.clear();
+        this.selectedNodeIds.add(item.id);
+        element.classList.add('selected');
+        this.updateSelectionStatus();
+      }
       this.showItemContextMenu(item, e.clientX, e.clientY);
     });
   }
@@ -453,12 +537,30 @@ export class ExplorerApp extends BaseApp {
       if (e.target.closest('.explorer-item-card') || e.target.closest('.explorer-file-row')) return;
       e.preventDefault();
 
-      const hasClipboard = !!window.__eduosClipboard;
+      const hasClipboard = !!(window.__eduosClipboard && ((window.__eduosClipboard.nodes && window.__eduosClipboard.nodes.length > 0) || window.__eduosClipboard.node));
       const items = [
         { label: 'Оновити', action: () => this.refresh() },
         { separator: true },
-        { label: 'Створити папку', action: () => this.createNewFolder() },
-        { label: 'Створити текстовий документ', action: () => this.createNewFile() },
+        {
+          iconHtml: '<img src="assets/icons/explorer.svg" width="16" height="16" style="vertical-align:middle;margin-right:4px;" />',
+          label: 'Створити папку',
+          action: () => this.createNewFolder()
+        },
+        {
+          iconHtml: '<img src="assets/icons/notepad.svg" width="16" height="16" style="vertical-align:middle;margin-right:4px;" />',
+          label: 'Створити текстовий файл (.txt)',
+          action: () => this.createNewTextFile()
+        },
+        {
+          iconHtml: '<img src="assets/icons/paint.svg" width="16" height="16" style="vertical-align:middle;margin-right:4px;" />',
+          label: 'Створити зображення (.png)',
+          action: () => this.createNewImageFile()
+        },
+        {
+          iconHtml: '<img src="assets/icons/archiver.svg" width="16" height="16" style="vertical-align:middle;margin-right:4px;" />',
+          label: 'Створити архів',
+          action: () => this.createNewArchive()
+        },
         { separator: true },
         {
           label: 'Вставити',
@@ -483,6 +585,7 @@ export class ExplorerApp extends BaseApp {
       const count = this.selectedNodeIds.size;
       statusSelected.textContent = count > 0 ? `Виділено: ${count}` : '';
     }
+    this.updateToolbarStates();
   }
 
   openItem(item) {
@@ -540,30 +643,18 @@ export class ExplorerApp extends BaseApp {
         {
           label: 'Вирізати',
           shortcut: 'Ctrl+X',
-          action: () => { window.__eduosClipboard = { action: 'cut', node: item }; }
+          action: () => this.actionCut()
         },
         {
           label: 'Копіювати',
           shortcut: 'Ctrl+C',
-          action: () => { window.__eduosClipboard = { action: 'copy', node: item }; }
+          action: () => this.actionCopy()
         },
         { separator: true },
         {
           label: 'Перейменувати',
           shortcut: 'F2',
-          action: async () => {
-            const newName = await dialogs.showRenameDialog({
-              currentName: item.name,
-              isDirectory: item.type === 'directory'
-            });
-            if (newName && newName !== item.name) {
-              try {
-                await vfs.renameNode(item.id, newName);
-              } catch (e) {
-                await dialogs.alert(e.message, { icon: 'error', title: 'Перейменування' });
-              }
-            }
-          }
+          action: () => this.renameItem(item)
         },
         {
           label: 'Видалити',
@@ -581,6 +672,160 @@ export class ExplorerApp extends BaseApp {
     contextMenu.show(menuItems, x, y);
   }
 
+  handleKeyDown(e) {
+    if (!this.win || !this.win.domElement) return;
+
+    // Працюємо лише коли вікно активне і не згорнуте
+    const isActive = this.win.domElement.classList.contains('active-window') && !this.win.isMinimized;
+    if (!isActive) return;
+
+    // Якщо користувач друкує в текстовому полі (пошук, адресний рядок тощо) - не перехоплюємо стандартні дії
+    const targetTag = e.target ? e.target.tagName : '';
+    if (targetTag === 'INPUT' || targetTag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) {
+      return;
+    }
+
+    // Якщо відкрите системне модальне вікно діалогу EduOS
+    if (document.querySelector('.dialog-backdrop, .modal-backdrop, .eduos-dialog-overlay')) {
+      return;
+    }
+
+    const isCtrl = e.ctrlKey || e.metaKey;
+    const keyLower = (e.key || '').toLowerCase();
+    const isKeyC = e.code === 'KeyC' || keyLower === 'c' || keyLower === 'с'; // en 'c', uk 'с'
+    const isKeyX = e.code === 'KeyX' || keyLower === 'x' || keyLower === 'ч'; // en 'x', uk 'ч'
+    const isKeyV = e.code === 'KeyV' || keyLower === 'v' || keyLower === 'м'; // en 'v', uk 'м'
+    const isKeyA = e.code === 'KeyA' || keyLower === 'a' || keyLower === 'ф'; // en 'a', uk 'ф'
+    const isDelete = e.key === 'Delete' || e.key === 'Del' || e.code === 'Delete';
+
+    if (isCtrl && !e.shiftKey && !e.altKey) {
+      if (isKeyC) {
+        if (this.selectedNodeIds.size > 0) {
+          e.preventDefault();
+          this.actionCopy();
+        }
+      } else if (isKeyX) {
+        if (this.selectedNodeIds.size > 0) {
+          e.preventDefault();
+          this.actionCut();
+        }
+      } else if (isKeyV) {
+        e.preventDefault();
+        this.actionPaste();
+      } else if (isKeyA) {
+        e.preventDefault();
+        this.selectAll();
+      }
+    } else if (!isCtrl && !e.shiftKey && !e.altKey && isDelete) {
+      if (this.selectedNodeIds.size > 0) {
+        e.preventDefault();
+        this.actionDelete();
+      }
+    } else if (!isCtrl && !e.shiftKey && !e.altKey && e.key === 'F2') {
+      if (this.selectedNodeIds.size === 1) {
+        e.preventDefault();
+        const id = Array.from(this.selectedNodeIds)[0];
+        const node = vfs.getNode(id);
+        if (node) this.renameItem(node);
+      }
+    }
+  }
+
+  selectAll() {
+    const currentNode = vfs.resolvePath(this.currentPath);
+    if (!currentNode) return;
+    const children = vfs.listChildren(currentNode.id);
+    this.selectedNodeIds.clear();
+    children.forEach((c) => this.selectedNodeIds.add(c.id));
+    this.container.querySelectorAll('.explorer-item-card, .explorer-file-row').forEach((el) => {
+      el.classList.add('selected');
+    });
+    this.updateSelectionStatus();
+  }
+
+  async renameItem(item) {
+    const newName = await dialogs.showRenameDialog({
+      currentName: item.name,
+      isDirectory: item.type === 'directory'
+    });
+    if (newName && newName !== item.name) {
+      try {
+        await vfs.renameNode(item.id, newName);
+        await this.refresh();
+      } catch (e) {
+        await dialogs.alert(e.message, { icon: 'error', title: 'Перейменування' });
+      }
+    }
+  }
+
+  updateCutVisuals() {
+    const cutNodeIds = new Set();
+    if (window.__eduosClipboard && window.__eduosClipboard.action === 'cut') {
+      if (window.__eduosClipboard.nodes) {
+        window.__eduosClipboard.nodes.forEach((n) => cutNodeIds.add(n.id));
+      } else if (window.__eduosClipboard.node) {
+        cutNodeIds.add(window.__eduosClipboard.node.id);
+      }
+    }
+
+    this.container.querySelectorAll('.explorer-item-card, .explorer-file-row').forEach((el) => {
+      const id = el.dataset.id;
+      if (cutNodeIds.has(id)) {
+        el.classList.add('is-cut');
+      } else {
+        el.classList.remove('is-cut');
+      }
+    });
+  }
+
+  updateToolbarStates() {
+    const hasSelection = this.selectedNodeIds.size > 0;
+    const hasClipboard = !!(window.__eduosClipboard && ((window.__eduosClipboard.nodes && window.__eduosClipboard.nodes.length > 0) || window.__eduosClipboard.node));
+
+    const btnCut = this.container.querySelector('#exp-cmd-cut');
+    const btnCopy = this.container.querySelector('#exp-cmd-copy');
+    const btnPaste = this.container.querySelector('#exp-cmd-paste');
+    const btnDelete = this.container.querySelector('#exp-cmd-delete');
+
+    if (btnCut) {
+      btnCut.classList.toggle('disabled', !hasSelection);
+      btnCut.setAttribute('aria-disabled', String(!hasSelection));
+    }
+    if (btnCopy) {
+      btnCopy.classList.toggle('disabled', !hasSelection);
+      btnCopy.setAttribute('aria-disabled', String(!hasSelection));
+    }
+    if (btnPaste) {
+      btnPaste.classList.toggle('disabled', !hasClipboard);
+      btnPaste.setAttribute('aria-disabled', String(!hasClipboard));
+    }
+    if (btnDelete) {
+      btnDelete.classList.toggle('disabled', !hasSelection);
+      btnDelete.setAttribute('aria-disabled', String(!hasSelection));
+    }
+  }
+
+  generateCopyName(originalName, parentId) {
+    const children = vfs.listChildren(parentId);
+    const existingNames = new Set(children.map((c) => c.name.toLowerCase()));
+
+    if (!existingNames.has(originalName.toLowerCase())) {
+      return originalName;
+    }
+
+    const lastDot = originalName.lastIndexOf('.');
+    const baseName = lastDot > 0 ? originalName.slice(0, lastDot) : originalName;
+    const ext = lastDot > 0 ? originalName.slice(lastDot) : '';
+
+    let candidate = `${baseName} — Копія${ext}`;
+    let count = 2;
+    while (existingNames.has(candidate.toLowerCase())) {
+      candidate = `${baseName} — Копія (${count})${ext}`;
+      count++;
+    }
+    return candidate;
+  }
+
   async createNewFolder() {
     const currentNode = vfs.resolvePath(this.currentPath);
     if (!currentNode) return;
@@ -594,36 +839,81 @@ export class ExplorerApp extends BaseApp {
     }
   }
 
-  async createNewFile() {
+  async createNewTextFile() {
     const currentNode = vfs.resolvePath(this.currentPath);
     if (!currentNode) return;
-    const name = await dialogs.prompt('Введіть назву файлу:', 'Текстовий документ.txt', {
-      title: 'Створення нового файлу'
+    const name = await dialogs.prompt('Введіть назву текстового файлу:', 'Текстовий документ.txt', {
+      title: 'Створення текстового файлу'
     });
     if (name) {
+      let fileName = name.trim();
+      if (!fileName.toLowerCase().endsWith('.txt')) {
+        fileName += '.txt';
+      }
       try {
-        await vfs.createFile(currentNode.id, name, '');
+        await vfs.createFile(currentNode.id, fileName, '');
       } catch (err) {
         await dialogs.alert(err.message, { icon: 'error', title: 'Створення файлу' });
       }
     }
   }
 
+  async createNewImageFile() {
+    const currentNode = vfs.resolvePath(this.currentPath);
+    if (!currentNode) return;
+    const name = await dialogs.prompt('Введіть назву файлу зображення:', 'Нове зображення.png', {
+      title: 'Створення зображення'
+    });
+    if (name) {
+      let fileName = name.trim();
+      if (!fileName.toLowerCase().endsWith('.png')) {
+        fileName += '.png';
+      }
+      try {
+        // Створюємо базове біле полотно PNG 640x480
+        const canvas = document.createElement('canvas');
+        canvas.width = 640;
+        canvas.height = 480;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL('image/png');
+
+        await vfs.createFile(currentNode.id, fileName, dataUrl);
+      } catch (err) {
+        await dialogs.alert(err.message, { icon: 'error', title: 'Створення зображення' });
+      }
+    }
+  }
+
+  createNewArchive() {
+    eventBus.emit('app:launch', { appId: 'archiver' });
+  }
+
+  // Зворотна сумісність
+  createNewFile() {
+    return this.createNewTextFile();
+  }
+
   actionCut() {
     if (this.selectedNodeIds.size === 0) return;
-    const id = Array.from(this.selectedNodeIds)[0];
-    const node = vfs.getNode(id);
-    if (node) {
-      window.__eduosClipboard = { action: 'cut', node };
+    const ids = Array.from(this.selectedNodeIds);
+    const nodes = ids.map((id) => vfs.getNode(id)).filter(Boolean);
+    if (nodes.length > 0) {
+      window.__eduosClipboard = { action: 'cut', nodes, node: nodes[0] };
+      this.updateCutVisuals();
+      this.updateToolbarStates();
     }
   }
 
   actionCopy() {
     if (this.selectedNodeIds.size === 0) return;
-    const id = Array.from(this.selectedNodeIds)[0];
-    const node = vfs.getNode(id);
-    if (node) {
-      window.__eduosClipboard = { action: 'copy', node };
+    const ids = Array.from(this.selectedNodeIds);
+    const nodes = ids.map((id) => vfs.getNode(id)).filter(Boolean);
+    if (nodes.length > 0) {
+      window.__eduosClipboard = { action: 'copy', nodes, node: nodes[0] };
+      this.updateCutVisuals();
+      this.updateToolbarStates();
     }
   }
 
@@ -632,14 +922,30 @@ export class ExplorerApp extends BaseApp {
     const currentNode = vfs.resolvePath(this.currentPath);
     if (!currentNode) return;
 
-    const { action, node } = window.__eduosClipboard;
+    if (this.currentPath.toLowerCase().includes('кошик')) {
+      await dialogs.alert('Неможливо вставити елементи у Кошик.', { icon: 'warning', title: 'Вставка' });
+      return;
+    }
+
+    const { action, nodes, node } = window.__eduosClipboard;
+    const itemsToProcess = nodes && nodes.length > 0 ? nodes : (node ? [node] : []);
+    if (itemsToProcess.length === 0) return;
+
     try {
-      if (action === 'cut') {
-        await vfs.moveNode(node.id, currentNode.id);
-        window.__eduosClipboard = null;
-      } else if (action === 'copy') {
-        await vfs.copyNode(node.id, currentNode.id);
+      for (const item of itemsToProcess) {
+        if (action === 'cut') {
+          await vfs.moveNode(item.id, currentNode.id);
+        } else if (action === 'copy') {
+          const targetName = this.generateCopyName(item.name, currentNode.id);
+          await vfs.copyNode(item.id, currentNode.id, targetName);
+        }
       }
+      if (action === 'cut') {
+        window.__eduosClipboard = null;
+      }
+      this.updateCutVisuals();
+      this.updateToolbarStates();
+      await this.renderFolderContent();
     } catch (err) {
       await dialogs.alert(err.message, { icon: 'error', title: 'Помилка вставки' });
     }
@@ -649,18 +955,33 @@ export class ExplorerApp extends BaseApp {
     const ids = specificId ? [specificId] : Array.from(this.selectedNodeIds);
     if (ids.length === 0) return;
 
+    const isTrash = this.currentPath.toLowerCase().includes('кошик');
+    const msg = isTrash
+      ? (ids.length === 1 ? 'Остаточно видалити вибраний елемент?' : `Остаточно видалити ${ids.length} елемент(ів)?`)
+      : (ids.length === 1 ? `Ви дійсно бажаєте перемістити «${vfs.getNode(ids[0])?.name || 'елемент'}» до Кошика?` : `Ви дійсно бажаєте перемістити ${ids.length} елемент(ів) до Кошика?`);
+
     const confirmed = await dialogs.confirm(
-      `Ви дійсно бажаєте видалити ${ids.length} елемент(ів) у Кошик?`,
-      { title: 'Видалення до Кошика', danger: true, confirmText: 'Видалити', cancelText: 'Скасувати' }
+      msg,
+      {
+        title: isTrash ? 'Остаточне видалення' : 'Видалення до Кошика',
+        danger: true,
+        confirmText: 'Видалити',
+        cancelText: 'Скасувати'
+      }
     );
+
     if (confirmed) {
       for (const id of ids) {
         try {
-          await vfs.deleteNode(id, false);
+          await vfs.deleteNode(id, isTrash);
         } catch (err) {
           await dialogs.alert(err.message, { icon: 'error' });
         }
       }
+      this.selectedNodeIds.clear();
+      this.updateSelectionStatus();
+      this.updateToolbarStates();
+      await this.renderFolderContent();
     }
   }
 

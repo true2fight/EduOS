@@ -3,7 +3,7 @@
  * Забезпечує повноцінне офлайн-функціонування тренажера в комп'ютерному класі (Cache-First).
  */
 
-const CACHE_NAME = 'eduos-cache-v12';
+const CACHE_NAME = 'eduos-cache-v15';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -22,6 +22,7 @@ const STATIC_ASSETS = [
   './libs/jspdf.umd.min.js',
   './js/core/dialogs.js',
   './js/core/input-language.js',
+  './js/apps/about-system.js',
   './assets/icons/favicon.svg',
   './assets/icons/logo.svg',
   './assets/icons/paint.svg',

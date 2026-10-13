@@ -31,6 +31,7 @@ import { NetworkApp } from '../apps/network.js';
 import { BrowserApp } from '../apps/browser.js';
 import { TaskCatalogApp } from '../learning/task-catalog.js';
 import { PackageEditorApp } from '../editor/package-editor.js';
+import { AboutSystemApp } from '../apps/about-system.js';
 
 class EduOSBootstrap {
   constructor() {
@@ -188,6 +189,14 @@ class EduOSBootstrap {
       width: 880,
       height: 580,
       createApp: (win, params) => new PackageEditorApp(win, params)
+    });
+
+    this.appsRegistry.set('about-system', {
+      title: 'Про систему EduOS',
+      icon: 'about-system',
+      width: 580,
+      height: 480,
+      createApp: (win, params) => new AboutSystemApp(win, params)
     });
   }
 
