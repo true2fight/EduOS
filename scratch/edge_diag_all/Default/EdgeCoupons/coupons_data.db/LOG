@@ -1,0 +1,6 @@
+2026/10/15-00:22:13.192 4528 Reusing MANIFEST D:\repos_antigravity\EduOS\scratch\edge_diag_all\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/10/15-00:22:13.193 4528 Recovering log #4
+2026/10/15-00:22:13.197 4528 Reusing old log D:\repos_antigravity\EduOS\scratch\edge_diag_all\Default\EdgeCoupons/coupons_data.db/000004.log 
+2026/10/15-00:22:13.314 4370 Level-0 table #8: started
+2026/10/15-00:22:13.318 4370 Level-0 table #8: 683444 bytes OK
+2026/10/15-00:22:13.321 4370 Delete type=0 #4

@@ -205,3 +205,156 @@
   line-height: 1.1;
   margin-top: 2px;
 }
+
+/* ==========================================================================
+   Fluent Календар панелі завдань (Taskbar Calendar Flyout)
+   ========================================================================== */
+.taskbar-calendar-flyout {
+  position: fixed;
+  bottom: 56px;
+  right: 12px;
+  width: 330px;
+  background: var(--bg-surface);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+  z-index: 10002;
+  padding: 18px 16px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px) scale(0.97);
+  transition: transform var(--transition-smooth), opacity var(--transition-smooth);
+  user-select: none;
+}
+
+.taskbar-calendar-flyout.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.cal-top-header {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.cal-live-time {
+  font-size: 30px;
+  font-weight: 300;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.cal-full-date {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--accent-primary);
+  margin-top: 5px;
+  text-transform: capitalize;
+}
+
+.cal-month-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2px;
+}
+
+.cal-month-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+.cal-month-title:hover {
+  background: var(--bg-surface-hover);
+}
+
+.cal-nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cal-nav-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 11px;
+  transition: all var(--transition-fast);
+}
+
+.cal-nav-btn:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--border-subtle);
+}
+
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 2px 0;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+  text-align: center;
+}
+
+.cal-day {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 50%;
+  color: var(--text-primary);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.cal-day:hover {
+  background: var(--bg-surface-hover);
+}
+
+.cal-day.other-month {
+  color: var(--text-muted);
+  opacity: 0.35;
+}
+
+.cal-day.today {
+  background: var(--accent-primary);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.cal-day.today:hover {
+  background: var(--accent-hover);
+}

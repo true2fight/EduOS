@@ -1,0 +1,51 @@
+2026-10-14 21:12:43.489: [INFO] CurrentProfilePath: D:\repos_antigravity\EduOS\scratch\edge_diag_dbg\Default
+2026-10-14 21:12:43.489: [INFO] Profiles total count: 1
+2026-10-14 21:12:43.489: [INFO] Profile: name=Профіль 1 path=D:\repos_antigravity\EduOS\scratch\edge_diag_dbg\Default lastActive=null
+2026-10-14 21:12:43.489: [INFO] LastUsedProfileDir: D:\repos_antigravity\EduOS\scratch\edge_diag_dbg\Default
+2026-10-14 21:12:43.489: [INFO] VisibilityChanged: 0
+2026-10-14 21:12:43.516: [INFO] OnDoneLoading sync enabled: 0
+2026-10-14 21:12:43.516: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-10-14 21:12:43.516: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-10-14 21:12:43.516: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-10-14 21:12:43.523: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2026-10-14 21:12:44.612: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2026-10-14 21:12:44.616: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-10-14 21:12:44.620: [INFO] Primary account changed.
+2026-10-14 21:12:44.620: [INFO] OnPrimaryAccountChanged PrimaryAccountChangeEvent::Type::kSet
+2026-10-14 21:12:44.635: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-10-14 21:12:44.651: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-10-14 21:12:48.735: [INFO] BookmarkNodeAdded, ABU: 0
+2026-10-14 21:12:48.736: [INFO] BookmarkNodeAdded, ABU: 0
+2026-10-14 21:12:48.736: [INFO] BookmarkNodeAdded, ABU: 0
+2026-10-14 21:12:48.736: [INFO] BookmarkNodeAdded, ABU: 0
+2026-10-14 21:12:48.736: [INFO] BookmarkNodeAdded, ABU: 0
+2026-10-14 21:12:49.630: [INFO] Sync initialization duration: 4892ms
+2026-10-14 21:13:15.238: [INFO] CurrentProfilePath: D:\repos_antigravity\EduOS\scratch\edge_diag_dbg\Default
+2026-10-14 21:13:15.238: [INFO] Profiles total count: 1
+2026-10-14 21:13:15.238: [INFO] Profile: name=Профіль 1 path=D:\repos_antigravity\EduOS\scratch\edge_diag_dbg\Default lastActive=null
+2026-10-14 21:13:15.238: [INFO] LastUsedProfileDir: D:\repos_antigravity\EduOS\scratch\edge_diag_dbg\Default
+2026-10-14 21:13:15.238: [INFO] VisibilityChanged: 0
+2026-10-14 21:13:15.268: [INFO] OnDoneLoading sync enabled: 0
+2026-10-14 21:13:15.268: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-10-14 21:13:15.268: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-10-14 21:13:15.268: [INFO] BookmarksSnapshot Startup total=5 bar=5 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-10-14 21:13:15.274: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-10-14 21:13:15.296: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-10-14 21:13:15.314: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-10-14 21:13:15.626: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-10-14 21:13:15.629: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-10-14 21:13:15.630: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-10-14 21:13:15.632: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-10-14 21:13:15.633: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-10-14 21:13:15.634: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-10-14 21:13:15.636: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 5
+2026-10-14 21:13:15.638: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 5
+2026-10-14 21:13:16.094: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 5
+2026-10-14 21:13:16.098: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 5
+2026-10-14 21:13:16.453: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 5
+2026-10-14 21:13:16.830: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 5
+2026-10-14 21:13:16.831: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 6
+2026-10-14 21:13:16.833: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 6
+2026-10-14 21:13:17.793: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 6
+2026-10-14 21:13:17.794: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 6
+2026-10-14 21:13:18.055: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 6

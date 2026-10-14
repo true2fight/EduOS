@@ -41,7 +41,6 @@ export class PaintApp extends BaseApp {
       <div class="paint-layout">
         <!-- Верхнє меню (Файл, Правка) -->
         <div class="paint-menubar">
-          <span class="app-title-icon" data-icon="paint" title="Графічний редактор Paint"></span>
           <div class="menu-dropdown">
             <button class="menu-btn">Файл</button>
             <div class="menu-dropdown-content">

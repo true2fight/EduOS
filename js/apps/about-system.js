@@ -15,12 +15,11 @@ export class AboutSystemApp extends BaseApp {
       <div class="about-system-layout">
         <div class="about-system-header">
           <div class="about-logo-wrapper">
-            <img src="assets/icons/logo.svg" alt="EduOS Logo" width="56" height="56" />
+            <img src="assets/icons/logo.svg" alt="EduOS Logo" width="48" height="48" />
           </div>
           <div class="about-title-block">
             <h1 class="about-system-title">EduOS</h1>
             <div class="about-system-subtitle">Навчальна операційна система для комп'ютерного класу</div>
-            <div class="about-system-version">Версія 2.0 (Україна, 2026)</div>
           </div>
         </div>
 
@@ -42,7 +41,7 @@ export class AboutSystemApp extends BaseApp {
         </div>
 
         <div class="about-system-footer">
-          <button class="btn btn-primary" id="about-btn-close">Зрозуміло</button>
+          <button class="about-btn-action" id="about-btn-close">Зрозуміло</button>
         </div>
       </div>
     `;

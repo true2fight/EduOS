@@ -33,7 +33,6 @@ export class NotepadApp extends BaseApp {
     this.container.innerHTML = `
       <div class="notepad-layout">
         <div class="notepad-menubar">
-          <span class="app-title-icon" data-icon="notepad" title="Текстовий редактор Блокнот"></span>
           <div class="menu-dropdown">
             <button class="menu-btn">Файл</button>
             <div class="menu-dropdown-content">

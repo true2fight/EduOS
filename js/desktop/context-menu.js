@@ -15,12 +15,14 @@ class ContextMenuService {
     this.menuElement.style.display = 'none';
     document.body.appendChild(this.menuElement);
 
-    // Закриття меню при кліку в будь-якому місці
-    window.addEventListener('mousedown', (e) => {
-      if (!this.menuElement.contains(e.target)) {
+    // Закриття меню при кліку або дотику за його межами
+    const closeIfOutside = (e) => {
+      if (this.isOpen && !this.menuElement.contains(e.target)) {
         this.hide();
       }
-    });
+    };
+    window.addEventListener('mousedown', closeIfOutside);
+    window.addEventListener('touchstart', closeIfOutside, { passive: true });
 
     // Закриття при натисканні Escape
     window.addEventListener('keydown', (e) => {
@@ -83,10 +85,10 @@ class ContextMenuService {
     let posX = x;
     let posY = y;
 
-    if (posX + rect.width > winW) posX = winW - rect.width - 10;
-    if (posY + rect.height > winH) posY = winH - rect.height - 10;
-    if (posX < 0) posX = 10;
-    if (posY < 0) posY = 10;
+    if (posX + rect.width > winW - 8) posX = Math.max(8, winW - rect.width - 8);
+    if (posY + rect.height > winH - 8) posY = Math.max(8, winH - rect.height - 8);
+    if (posX < 8) posX = 8;
+    if (posY < 8) posY = 8;
 
     this.menuElement.style.left = `${posX}px`;
     this.menuElement.style.top = `${posY}px`;

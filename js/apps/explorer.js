@@ -494,6 +494,7 @@ export class ExplorerApp extends BaseApp {
   }
 
   attachItemInteractions(element, item) {
+    // 1. Події миші (ПК)
     element.addEventListener('click', (e) => {
       e.stopPropagation();
       if (!e.ctrlKey) {
@@ -530,13 +531,83 @@ export class ExplorerApp extends BaseApp {
       }
       this.showItemContextMenu(item, e.clientX, e.clientY);
     });
+
+    // 2. Сенсорне керування (планшет / смартфон):
+    // - Короткий дотик (Tap) — відкрити файл чи папку
+    // - Утримання пальця (Long Press, 500мс) — виклик контекстного меню об'єкта
+    let touchTimer = null;
+    let touchStartX = 0, touchStartY = 0;
+    let touchMoved = false;
+    let isTouchLongPress = false;
+    let touchStartTime = 0;
+
+    element.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) return;
+      const t = e.touches[0];
+      touchStartX = t.clientX;
+      touchStartY = t.clientY;
+      touchStartTime = Date.now();
+      touchMoved = false;
+      isTouchLongPress = false;
+
+      touchTimer = setTimeout(() => {
+        isTouchLongPress = true;
+        if (navigator.vibrate) {
+          try { navigator.vibrate(35); } catch {}
+        }
+        if (!this.selectedNodeIds.has(item.id)) {
+          this.container.querySelectorAll('.explorer-item-card.selected, .explorer-file-row.selected').forEach((el) => {
+            el.classList.remove('selected');
+          });
+          this.selectedNodeIds.clear();
+          this.selectedNodeIds.add(item.id);
+          element.classList.add('selected');
+          this.updateSelectionStatus();
+        }
+        this.showItemContextMenu(item, touchStartX, touchStartY);
+      }, 500);
+    }, { passive: true });
+
+    element.addEventListener('touchmove', (e) => {
+      if (e.touches.length !== 1) return;
+      const t = e.touches[0];
+      if (Math.abs(t.clientX - touchStartX) > 10 || Math.abs(t.clientY - touchStartY) > 10) {
+        touchMoved = true;
+        if (touchTimer) {
+          clearTimeout(touchTimer);
+          touchTimer = null;
+        }
+      }
+    }, { passive: true });
+
+    element.addEventListener('touchend', (e) => {
+      if (touchTimer) {
+        clearTimeout(touchTimer);
+        touchTimer = null;
+      }
+
+      if (isTouchLongPress) {
+        e.preventDefault();
+        return;
+      }
+
+      // Якщо це був короткий дотик (Tap) — відкриваємо елемент
+      if (!touchMoved && (Date.now() - touchStartTime < 500)) {
+        e.preventDefault();
+        this.openItem(item);
+      }
+    });
+
+    element.addEventListener('touchcancel', () => {
+      if (touchTimer) {
+        clearTimeout(touchTimer);
+        touchTimer = null;
+      }
+    });
   }
 
   setupContextMenuOnEmpty(container, currentNode) {
-    container.addEventListener('contextmenu', (e) => {
-      if (e.target.closest('.explorer-item-card') || e.target.closest('.explorer-file-row')) return;
-      e.preventDefault();
-
+    const showMenu = (clientX, clientY) => {
       const hasClipboard = !!(window.__eduosClipboard && ((window.__eduosClipboard.nodes && window.__eduosClipboard.nodes.length > 0) || window.__eduosClipboard.node));
       const items = [
         { label: 'Оновити', action: () => this.refresh() },
@@ -575,7 +646,53 @@ export class ExplorerApp extends BaseApp {
         }
       ];
 
-      contextMenu.show(items, e.clientX, e.clientY);
+      contextMenu.show(items, clientX, clientY);
+    };
+
+    container.addEventListener('contextmenu', (e) => {
+      if (e.target.closest('.explorer-item-card') || e.target.closest('.explorer-file-row')) return;
+      e.preventDefault();
+      showMenu(e.clientX, e.clientY);
+    });
+
+    // Сенсорний виклик контекстного меню на порожньому полі Провідника
+    let emptyTouchTimer = null;
+    let emptyStartX = 0, emptyStartY = 0;
+    let emptyMoved = false;
+
+    container.addEventListener('touchstart', (e) => {
+      if (e.target.closest('.explorer-item-card') || e.target.closest('.explorer-file-row')) return;
+      if (e.touches.length !== 1) return;
+      const t = e.touches[0];
+      emptyStartX = t.clientX;
+      emptyStartY = t.clientY;
+      emptyMoved = false;
+
+      emptyTouchTimer = setTimeout(() => {
+        if (navigator.vibrate) {
+          try { navigator.vibrate(35); } catch {}
+        }
+        showMenu(emptyStartX, emptyStartY);
+      }, 500);
+    }, { passive: true });
+
+    container.addEventListener('touchmove', (e) => {
+      if (e.touches.length !== 1) return;
+      const t = e.touches[0];
+      if (Math.abs(t.clientX - emptyStartX) > 10 || Math.abs(t.clientY - emptyStartY) > 10) {
+        emptyMoved = true;
+        if (emptyTouchTimer) {
+          clearTimeout(emptyTouchTimer);
+          emptyTouchTimer = null;
+        }
+      }
+    }, { passive: true });
+
+    container.addEventListener('touchend', () => {
+      if (emptyTouchTimer) {
+        clearTimeout(emptyTouchTimer);
+        emptyTouchTimer = null;
+      }
     });
   }
 

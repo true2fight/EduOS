@@ -14,6 +14,7 @@ export class TaskManagerApp extends BaseApp {
     this.selectedWinId = null;
     this.perfInterval = null;
     this.cpuHistory = new Array(30).fill(15);
+    this.ramHistory = new Array(30).fill(28);
   }
 
   async init() {
@@ -131,54 +132,129 @@ export class TaskManagerApp extends BaseApp {
       <div class="tm-perf-view">
         <div class="perf-metric-card">
           <h4>ЦП (Центральний процесор)</h4>
-          <canvas id="perf-cpu-canvas" width="400" height="120"></canvas>
-          <div class="perf-stats" id="perf-cpu-stat">Використання: 18%</div>
+          <canvas id="perf-cpu-canvas" width="400" height="110"></canvas>
+          <div class="perf-stats" id="perf-cpu-stat">Використання: 18% @ 3.20 GHz</div>
         </div>
         <div class="perf-metric-card">
           <h4>Пам'ять (RAM)</h4>
-          <canvas id="perf-ram-canvas" width="400" height="120"></canvas>
-          <div class="perf-stats">Використано: 2.1 ГБ / 8.0 ГБ</div>
+          <canvas id="perf-ram-canvas" width="400" height="110"></canvas>
+          <div class="perf-stats" id="perf-ram-stat">Використано: 2.2 ГБ / 8.0 ГБ (28%)</div>
         </div>
       </div>
     `;
 
-    const canvas = content.querySelector('#perf-cpu-canvas');
-    const ctx = canvas.getContext('2d');
-    const statEl = content.querySelector('#perf-cpu-stat');
+    const canvasCpu = content.querySelector('#perf-cpu-canvas');
+    const ctxCpu = canvasCpu.getContext('2d');
+    const statCpuEl = content.querySelector('#perf-cpu-stat');
+
+    const canvasRam = content.querySelector('#perf-ram-canvas');
+    const ctxRam = canvasRam.getContext('2d');
+    const statRamEl = content.querySelector('#perf-ram-stat');
 
     const drawGraph = () => {
-      const val = Math.round(10 + Math.random() * 25);
-      this.cpuHistory.push(val);
+      // 1. Оновлення та відмальовка ЦП
+      const cpuVal = Math.round(10 + Math.random() * 22);
+      this.cpuHistory.push(cpuVal);
       this.cpuHistory.shift();
 
-      statEl.textContent = `Використання: ${val}% @ 3.20 GHz`;
+      statCpuEl.innerHTML = `Використання: <strong>${cpuVal}%</strong> @ 3.20 GHz | Потоків: ${18 + Math.round(cpuVal / 3)}`;
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#0a2540';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctxCpu.clearRect(0, 0, canvasCpu.width, canvasCpu.height);
+      ctxCpu.fillStyle = '#0a2540';
+      ctxCpu.fillRect(0, 0, canvasCpu.width, canvasCpu.height);
 
-      // Сітка
-      ctx.strokeStyle = '#1e3d59';
-      ctx.lineWidth = 1;
-      for (let x = 0; x < canvas.width; x += 40) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      // Сітка ЦП
+      ctxCpu.strokeStyle = '#1e3d59';
+      ctxCpu.lineWidth = 1;
+      for (let x = 0; x < canvasCpu.width; x += 40) {
+        ctxCpu.beginPath(); ctxCpu.moveTo(x, 0); ctxCpu.lineTo(x, canvasCpu.height); ctxCpu.stroke();
       }
-      for (let y = 0; y < canvas.height; y += 30) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      for (let y = 0; y < canvasCpu.height; y += 28) {
+        ctxCpu.beginPath(); ctxCpu.moveTo(0, y); ctxCpu.lineTo(canvasCpu.width, y); ctxCpu.stroke();
       }
 
-      // Лінія графіка
-      ctx.strokeStyle = '#00f2fe';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      const step = canvas.width / (this.cpuHistory.length - 1);
+      // Заливка графіка ЦП
+      const stepCpu = canvasCpu.width / (this.cpuHistory.length - 1);
+      const gradCpu = ctxCpu.createLinearGradient(0, 0, 0, canvasCpu.height);
+      gradCpu.addColorStop(0, 'rgba(0, 242, 254, 0.35)');
+      gradCpu.addColorStop(1, 'rgba(0, 242, 254, 0.02)');
+
+      ctxCpu.fillStyle = gradCpu;
+      ctxCpu.beginPath();
+      ctxCpu.moveTo(0, canvasCpu.height);
       this.cpuHistory.forEach((v, i) => {
-        const px = i * step;
-        const py = canvas.height - (v / 100) * canvas.height;
-        if (i === 0) ctx.moveTo(px, py);
-        else ctx.lineTo(px, py);
+        const px = i * stepCpu;
+        const py = canvasCpu.height - (v / 100) * canvasCpu.height;
+        ctxCpu.lineTo(px, py);
       });
-      ctx.stroke();
+      ctxCpu.lineTo(canvasCpu.width, canvasCpu.height);
+      ctxCpu.closePath();
+      ctxCpu.fill();
+
+      // Лінія графіка ЦП
+      ctxCpu.strokeStyle = '#00f2fe';
+      ctxCpu.lineWidth = 2;
+      ctxCpu.beginPath();
+      this.cpuHistory.forEach((v, i) => {
+        const px = i * stepCpu;
+        const py = canvasCpu.height - (v / 100) * canvasCpu.height;
+        if (i === 0) ctxCpu.moveTo(px, py);
+        else ctxCpu.lineTo(px, py);
+      });
+      ctxCpu.stroke();
+
+      // 2. Оновлення та відмальовка Пам'яті (RAM)
+      const openWinCount = windowManager.getAllWindows().length;
+      const baseRamGb = 1.9 + (openWinCount * 0.16) + (Math.sin(Date.now() / 3000) * 0.08) + (Math.random() * 0.04);
+      const ramPct = Math.min(95, Math.round((baseRamGb / 8.0) * 100));
+      this.ramHistory.push(ramPct);
+      this.ramHistory.shift();
+
+      statRamEl.innerHTML = `Використано: <strong>${baseRamGb.toFixed(1)} ГБ</strong> з 8.0 ГБ (<strong>${ramPct}%</strong>) | Доступно: <strong>${(8.0 - baseRamGb).toFixed(1)} ГБ</strong>`;
+
+      ctxRam.clearRect(0, 0, canvasRam.width, canvasRam.height);
+      ctxRam.fillStyle = '#170f2a';
+      ctxRam.fillRect(0, 0, canvasRam.width, canvasRam.height);
+
+      // Сітка RAM
+      ctxRam.strokeStyle = '#2d1e4e';
+      ctxRam.lineWidth = 1;
+      for (let x = 0; x < canvasRam.width; x += 40) {
+        ctxRam.beginPath(); ctxRam.moveTo(x, 0); ctxRam.lineTo(x, canvasRam.height); ctxRam.stroke();
+      }
+      for (let y = 0; y < canvasRam.height; y += 28) {
+        ctxRam.beginPath(); ctxRam.moveTo(0, y); ctxRam.lineTo(canvasRam.width, y); ctxRam.stroke();
+      }
+
+      // Заливка графіка RAM (фіолетово-пурпурний градієнт Fluent)
+      const stepRam = canvasRam.width / (this.ramHistory.length - 1);
+      const gradRam = ctxRam.createLinearGradient(0, 0, 0, canvasRam.height);
+      gradRam.addColorStop(0, 'rgba(192, 132, 252, 0.38)');
+      gradRam.addColorStop(1, 'rgba(192, 132, 252, 0.02)');
+
+      ctxRam.fillStyle = gradRam;
+      ctxRam.beginPath();
+      ctxRam.moveTo(0, canvasRam.height);
+      this.ramHistory.forEach((v, i) => {
+        const px = i * stepRam;
+        const py = canvasRam.height - (v / 100) * canvasRam.height;
+        ctxRam.lineTo(px, py);
+      });
+      ctxRam.lineTo(canvasRam.width, canvasRam.height);
+      ctxRam.closePath();
+      ctxRam.fill();
+
+      // Лінія графіка RAM
+      ctxRam.strokeStyle = '#c084fc';
+      ctxRam.lineWidth = 2;
+      ctxRam.beginPath();
+      this.ramHistory.forEach((v, i) => {
+        const px = i * stepRam;
+        const py = canvasRam.height - (v / 100) * canvasRam.height;
+        if (i === 0) ctxRam.moveTo(px, py);
+        else ctxRam.lineTo(px, py);
+      });
+      ctxRam.stroke();
     };
 
     drawGraph();

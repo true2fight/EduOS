@@ -1,0 +1,33 @@
+2026-10-14 21:12:13.001: [INFO] CurrentProfilePath: D:\repos_antigravity\EduOS\scratch\edge_diag_all\Default
+2026-10-14 21:12:13.001: [INFO] Profiles total count: 1
+2026-10-14 21:12:13.001: [INFO] Profile: name=Профіль 1 path=D:\repos_antigravity\EduOS\scratch\edge_diag_all\Default lastActive=null
+2026-10-14 21:12:13.001: [INFO] LastUsedProfileDir: D:\repos_antigravity\EduOS\scratch\edge_diag_all\Default
+2026-10-14 21:12:13.001: [INFO] VisibilityChanged: 0
+2026-10-14 21:12:13.031: [INFO] OnDoneLoading sync enabled: 0
+2026-10-14 21:12:13.031: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-10-14 21:12:13.031: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-10-14 21:12:13.031: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-10-14 21:12:13.038: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2026-10-14 21:12:14.051: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2026-10-14 21:12:14.055: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-10-14 21:12:14.059: [INFO] Primary account changed.
+2026-10-14 21:12:14.059: [INFO] OnPrimaryAccountChanged PrimaryAccountChangeEvent::Type::kSet
+2026-10-14 21:12:14.073: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-10-14 21:12:14.097: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2026-10-14 21:12:19.195: [INFO] BookmarkNodeAdded, ABU: 0
+2026-10-14 21:12:19.196: [INFO] BookmarkNodeAdded, ABU: 0
+2026-10-14 21:12:19.196: [INFO] BookmarkNodeAdded, ABU: 0
+2026-10-14 21:12:19.196: [INFO] BookmarkNodeAdded, ABU: 0
+2026-10-14 21:12:19.196: [INFO] BookmarkNodeAdded, ABU: 0
+2026-10-14 21:12:19.712: [INFO] Sync initialization duration: 5502ms
+2026-10-14 21:22:11.060: [INFO] CurrentProfilePath: D:\repos_antigravity\EduOS\scratch\edge_diag_all\Default
+2026-10-14 21:22:11.060: [INFO] Profiles total count: 1
+2026-10-14 21:22:11.060: [INFO] Profile: name=Особистий path=D:\repos_antigravity\EduOS\scratch\edge_diag_all\Default lastActive=2026-10-14T21:12:13.011Z
+2026-10-14 21:22:11.060: [INFO] LastUsedProfileDir: D:\repos_antigravity\EduOS\scratch\edge_diag_all\Default
+2026-10-14 21:22:11.060: [INFO] MostRecentlyActiveProfile: name=Особистий path=D:\repos_antigravity\EduOS\scratch\edge_diag_all\Default lastActive=2026-10-14T21:12:13.011Z
+2026-10-14 21:22:11.060: [INFO] VisibilityChanged: 0
+2026-10-14 21:22:11.106: [INFO] OnDoneLoading sync enabled: 1
+2026-10-14 21:22:11.106: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-10-14 21:22:11.106: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-10-14 21:22:11.106: [INFO] BookmarksSnapshot Startup total=5 bar=5 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-10-14 21:22:11.287: [INFO] Sync initialization duration: 173ms

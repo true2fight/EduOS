@@ -28,7 +28,6 @@ export class ArchiverApp extends BaseApp {
       <div class="archiver-layout">
         <!-- Тулбар -->
         <div class="archiver-toolbar">
-          <span class="app-title-icon" data-icon="archiver" title="Архіватор"></span>
           <button class="arc-btn" id="arc-btn-new">
             <span>➕</span> Новий архів
           </button>

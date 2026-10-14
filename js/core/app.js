@@ -68,6 +68,12 @@ class EduOSBootstrap {
     } else {
       this.showLoginScreen();
     }
+    window.__eduosBootstrapReady = true;
+    window.__eduosEventBus = eventBus;
+    window.__eduosDialogs = dialogs;
+    window.__eduosWindowManager = windowManager;
+    window.__eduosProfileManager = profileManager;
+    eventBus.emit('system:ready');
   }
 
   registerApplications() {
@@ -194,8 +200,11 @@ class EduOSBootstrap {
     this.appsRegistry.set('about-system', {
       title: 'Про систему EduOS',
       icon: 'about-system',
-      width: 580,
-      height: 480,
+      width: 540,
+      height: 420,
+      isDialog: true,
+      canMaximize: false,
+      isResizable: false,
       createApp: (win, params) => new AboutSystemApp(win, params)
     });
   }
@@ -240,6 +249,9 @@ class EduOSBootstrap {
       icon: reg.icon,
       width: reg.width,
       height: reg.height,
+      isDialog: reg.isDialog,
+      canMaximize: reg.canMaximize,
+      isResizable: reg.isResizable,
       params
     });
 
@@ -365,7 +377,13 @@ class EduOSBootstrap {
 }
 
 // Запуск системи при завантаженні DOM
-window.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') {
+  window.addEventListener('DOMContentLoaded', () => {
+    const os = new EduOSBootstrap();
+    os.start();
+  });
+} else {
   const os = new EduOSBootstrap();
   os.start();
-});
+}
+

@@ -197,15 +197,8 @@ export class SettingsApp extends BaseApp {
           <p><strong>Ім'я:</strong> ${profile.firstName}</p>
           <p><strong>Клас:</strong> ${profile.gradeClass}</p>
           <p><strong>Ідентифікатор:</strong> ${profile.profileId}</p>
-          <div class="settings-actions">
-            <button class="settings-secondary-btn" id="set-btn-logout">Змінити учня / Вийти</button>
-          </div>
         </div>
       </div>
     `;
-
-    container.querySelector('#set-btn-logout').addEventListener('click', () => {
-      profileManager.logout();
-    });
   }
 }

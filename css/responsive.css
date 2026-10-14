@@ -1,15 +1,46 @@
 /* ==========================================================================
-   EduOS - Responsive & Adaptive Design
+   EduOS - Responsive & Adaptive Design (ПК, Планшети, Смартфони)
    ========================================================================== */
 
+/* Загальні оптимізації для сенсорних пристроїв */
+@media (hover: none) and (pointer: coarse) {
+  button,
+  .desktop-icon-item,
+  .explorer-item-card,
+  .explorer-file-row,
+  .sidebar-item,
+  .taskbar-item,
+  .context-menu-item,
+  .fluent-dialog-btn {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .desktop-icon-item,
+  .window-titlebar,
+  .explorer-item-card {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+}
+
 @media (max-width: 768px) {
+  /* Панель завдань */
   #taskbar {
     height: 44px;
-    padding: 0 8px;
+    padding: 0 6px;
+    gap: 4px;
+  }
+
+  .taskbar-start-btn {
+    height: 36px;
+    padding: 0 10px;
   }
 
   .taskbar-item {
     max-width: 44px;
+    height: 36px;
     padding: 0 8px;
   }
 
@@ -17,6 +48,31 @@
     display: none;
   }
 
+  .taskbar-tray {
+    gap: 4px;
+  }
+
+  .taskbar-clock {
+    padding: 0 6px;
+    height: 36px;
+  }
+
+  .clock-time {
+    font-size: 11px;
+  }
+
+  .clock-date {
+    display: none;
+  }
+
+  .taskbar-calendar-flyout {
+    width: calc(100vw - 16px);
+    max-width: 340px;
+    right: 8px;
+    bottom: 52px;
+  }
+
+  /* Меню Пуск */
   #start-menu {
     width: calc(100vw - 16px);
     height: 75vh;
@@ -26,6 +82,7 @@
 
   .start-apps-grid {
     grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
   }
 
   #task-engine-widget {
@@ -34,6 +91,18 @@
     top: 10px;
   }
 
+  /* Вікна на планшетах */
+  .window-titlebar {
+    height: 40px;
+    min-height: 40px;
+  }
+
+  .win-btn {
+    width: 44px;
+    height: 100%;
+  }
+
+  /* Провідник */
   .explorer-sidebar {
     width: 140px;
   }
@@ -41,18 +110,118 @@
   .explorer-search-wrapper {
     width: 120px;
   }
+
+  .explorer-toolbar {
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 4px 6px;
+  }
+
+  .explorer-file-row {
+    min-height: 40px;
+  }
+
+  .explorer-item-card {
+    min-height: 80px;
+    padding: 8px 6px;
+  }
+
+  /* Контекстне меню */
+  .edu-context-menu {
+    max-width: calc(100vw - 16px);
+    border-radius: var(--radius-md);
+  }
+
+  .context-menu-item {
+    min-height: 40px;
+    padding: 8px 14px;
+    font-size: 13.5px;
+  }
+
+  /* Діалогові вікна */
+  .fluent-dialog {
+    min-width: 0 !important;
+    width: min(480px, calc(100vw - 20px)) !important;
+    max-width: calc(100vw - 20px) !important;
+  }
+
+  .fluent-dialog-alert,
+  .fluent-dialog-confirm,
+  .fluent-dialog-prompt,
+  .fluent-dialog-newfolder,
+  .fluent-dialog-rename,
+  .fluent-dialog-savefile {
+    width: min(480px, calc(100vw - 20px)) !important;
+  }
 }
 
 @media (max-width: 480px) {
+  /* Меню Пуск на смартфонах */
   .start-apps-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
   }
 
+  .start-categories-container {
+    padding: 8px;
+  }
+
+  /* Провідник */
   .explorer-sidebar {
     display: none;
   }
 
+  .explorer-toolbar-group {
+    gap: 2px;
+  }
+
+  .explorer-cmd-btn {
+    padding: 0 8px;
+    height: 32px;
+  }
+
   .tray-lang-badge {
     display: none;
+  }
+
+  /* Діалоги на вузьких екранах */
+  .fluent-dialog {
+    width: calc(100vw - 16px) !important;
+    margin: 8px;
+    border-radius: var(--radius-md);
+  }
+
+  .fluent-dialog-header {
+    padding: 10px 14px;
+  }
+
+  .fluent-dialog-body {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .fluent-dialog-footer {
+    padding: 10px 14px;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .fluent-dialog-btn {
+    flex: 1;
+    min-width: 120px;
+    height: 38px;
+  }
+
+  /* Вікна на смартфоні */
+  .edu-window {
+    border-radius: var(--radius-md);
+  }
+
+  .edu-window.maximized {
+    border-radius: 0 !important;
+  }
+
+  .window-title-text {
+    max-width: 150px;
   }
 }

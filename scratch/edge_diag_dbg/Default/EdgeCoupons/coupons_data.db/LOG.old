@@ -1,0 +1,5 @@
+2026/10/15-00:12:45.726 4b3c Creating DB D:\repos_antigravity\EduOS\scratch\edge_diag_dbg\Default\EdgeCoupons/coupons_data.db since it was missing.
+2026/10/15-00:12:45.732 4b3c Reusing MANIFEST D:\repos_antigravity\EduOS\scratch\edge_diag_dbg\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/10/15-00:12:45.911 4914 Level-0 table #5: started
+2026/10/15-00:12:45.917 4914 Level-0 table #5: 683273 bytes OK
+2026/10/15-00:12:45.919 4914 Delete type=0 #3
